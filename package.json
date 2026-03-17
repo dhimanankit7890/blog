@@ -9,15 +9,20 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.2.1",
+    "mongodb": "^7.1.0",
     "next": "16.1.6",
+    "next-themes": "^0.4.6",
+    "quill": "^2.0.3",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "react-quilljs": "^2.0.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
-    "tailwindcss": "^4"
+    "tailwindcss": "^4.2.1"
   }
 }
