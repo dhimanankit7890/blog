@@ -19,7 +19,7 @@ const Editor = ({ value, onChange, placeholder }) => {
       containerRef.current.innerHTML = ""; // Clear existing editor content
 
       // Dynamically import Quill to avoid Server-Side Rendering (SSR) issues
-      import("quill").then((QuillModule) => {
+  b     import("quill").then((QuillModule) => {
         if (quillInstance.current) return; // Prevent double initialization due to StrictMode race condition
         const Quill = QuillModule.default ? QuillModule.default : QuillModule;
         

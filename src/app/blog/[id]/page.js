@@ -71,7 +71,7 @@ export default function SingleBlogPage() {
           <img
             src={blog.logo || "/logo.png"}
             alt="logo"
-            className="w-10 h-10 rounded-full bg-zinc-100 dark:bg-zinc-800 object-cover"
+            className="w-10 h-10 rounded-full bg-transparent object-contain"
           />
           <div>
             <p className="text-zinc-900 dark:text-white font-medium">{blog.authorName || "My Portfolio"}</p>
@@ -82,7 +82,7 @@ export default function SingleBlogPage() {
       
       {/* Content */}
       <div 
-        className="prose prose-zinc dark:prose-invert max-w-none text-zinc-700 dark:text-zinc-300 leading-relaxed text-lg"
+        className="prose prose-zinc dark:prose-invert max-w-none text-zinc-700 dark:text-zinc-300 leading-relaxed text-lg [&_*]:!bg-transparent [&_*]:!text-zinc-700 dark:[&_*]:!text-white"
         dangerouslySetInnerHTML={{ __html: blog.desc }}
       />
     </div>

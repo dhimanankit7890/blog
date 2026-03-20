@@ -24,9 +24,11 @@ export default function BlogPage() {
       <div className="grid md:grid-cols-3 gap-8">
 
         {blogs.map((blog) => (
-          <div
+          <Link
+            href={`/blog/${blog.id}`}
+            target="_blank"
             key={blog.id}
-            className="bg-zinc-50 dark:bg-zinc-900 rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800 hover:scale-[1.02] transition shadow-sm dark:shadow-none"
+            className="block bg-zinc-50 dark:bg-zinc-900 rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800 hover:scale-[1.02] transition shadow-sm dark:shadow-none cursor-pointer"
           >
 
             {/* Blog Image */}
@@ -47,7 +49,7 @@ export default function BlogPage() {
 
               {/* Description */}
               <div 
-                className="text-zinc-600 dark:text-zinc-300 mt-3 text-sm line-clamp-5 [&>p]:mb-2"
+                className="text-zinc-600 dark:text-zinc-300 mt-3 text-sm line-clamp-5 [&>p]:mb-2 [&_*]:!bg-transparent [&_*]:!text-zinc-600 dark:[&_*]:!text-white"
                 dangerouslySetInnerHTML={{ __html: blog.desc }}
               />
 
@@ -58,7 +60,7 @@ export default function BlogPage() {
                   <img
                     src={blog.logo || "/logo.png"}
                     alt="logo"
-                    className="w-10 h-10 rounded-full object-cover bg-zinc-100 dark:bg-zinc-800"
+                    className="w-10 h-10 rounded-full object-contain bg-transparent"
                   />
                   <div className="flex flex-col">
                     <span className="text-sm font-medium text-zinc-900 dark:text-zinc-100">
@@ -71,14 +73,14 @@ export default function BlogPage() {
                 </div>
 
                 {/* Read More Link */}
-                <Link href={`/blog/${blog.id}`} className="text-blue-600 dark:text-blue-400 text-sm font-semibold hover:text-blue-500 hover:underline transition whitespace-nowrap mb-1">
+                <span className="text-blue-600 dark:text-blue-400 text-sm font-semibold hover:text-blue-500 hover:underline transition whitespace-nowrap mb-1">
                   Read More &rarr;
-                </Link>
+                </span>
               </div>
 
             </div>
 
-          </div>
+          </Link>
         ))}
 
       </div>
