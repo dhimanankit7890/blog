@@ -14,6 +14,7 @@ if (!uri) {
   clientPromise = Promise.reject(
     new Error('Missing environment variable: "MONGODB_URI". Please add it in Netlify Site Settings > Environment Variables.')
   );
+  clientPromise.catch(() => {}); // Prevent unhandled rejection crash
 } else if (process.env.NODE_ENV === "development") {
   // In development, reuse the connection across hot reloads
   if (!global._mongoClientPromise || global._mongoUri !== uri) {
