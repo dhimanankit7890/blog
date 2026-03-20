@@ -1,44 +1,32 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
 import Link from "next/link";
+import clientPromise from "@/lib/mongodb";
+import { ObjectId } from "mongodb";
+import { notFound } from "next/navigation";
 
-export default function SingleBlogPage() {
-  const params = useParams();
-  const [blog, setBlog] = useState(null);
-  const [loading, setLoading] = useState(true);
+export const revalidate = 0; // Force dynamic rendering so new blogs show immediately
 
-  useEffect(() => {
-    if (params?.id) {
-      fetch('/api/blogs')
-        .then(res => res.json())
-        .then(data => {
-          const blogs = Array.isArray(data) ? data : [];
-          const foundBlog = blogs.find((b) => String(b.id) === String(params.id));
-          setBlog(foundBlog || null);
-          setLoading(false);
-        })
-        .catch(err => {
-          console.error("Failed to fetch blogs", err);
-          setLoading(false);
-        });
+export default async function SingleBlogPage({ params }) {
+  let blog = null;
+  
+  try {
+    const resolvedParams = await params;
+    const client = await clientPromise;
+    const db = client.db("blog_db");
+    
+    const blogDoc = await db.collection("blogs").findOne({ _id: new ObjectId(resolvedParams.id) });
+    
+    if (blogDoc) {
+      blog = {
+        ...blogDoc,
+        id: blogDoc._id.toString()
+      };
     }
-  }, [params]);
-
-  if (loading) {
-    return <div className="max-w-4xl mx-auto py-16 px-4 text-center text-zinc-900 dark:text-white">Loading...</div>;
+  } catch (err) {
+    console.error("Failed to fetch single blog", err);
   }
 
   if (!blog) {
-    return (
-      <div className="max-w-4xl mx-auto py-32 px-4 text-center">
-        <h1 className="text-3xl font-bold text-zinc-900 dark:text-white mb-6">Blog not found</h1>
-        <Link href="/blog" className="bg-zinc-200 dark:bg-zinc-800 text-zinc-900 dark:text-white px-6 py-3 rounded-lg hover:bg-zinc-300 dark:hover:bg-blue-600 transition inline-block">
-          Back to Blogs
-        </Link>
-      </div>
-    );
+    notFound(); // Show Next.js 404 page if blog is missing
   }
 
   return (
